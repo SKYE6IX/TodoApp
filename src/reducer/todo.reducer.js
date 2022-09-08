@@ -1,0 +1,35 @@
+import { v4 as uuidv4 } from "uuid";
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD":
+      return [...state, { id: uuidv4(), task: action.task, completed: false }];
+    case "REMOVE":
+      return state.filter((todo) => todo.id !== action.id);
+    case "TOGGLE":
+      return state.map((todo) =>
+        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+      );
+    case "EDIT":
+      return state.map((todo) =>
+        todo.id === action.id ? { ...todo, task: action.task } : todo
+      );
+
+    default:
+      return state;
+  }
+};
+
+export default reducer;
+
+// function handleDragEnd(event) {
+//   const {active, over} = event;
+
+//   if (active.id !== over.id) {
+//     setItems((items) => {
+//       const oldIndex = items.indexOf(active.id);
+//       const newIndex = items.indexOf(over.id);
+
+//       return arrayMove(items, oldIndex, newIndex);
+//     });
+//   }
+// }
